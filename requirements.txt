@@ -1,2 +1,7 @@
-Django~=5.2.8
-djangorestframework~=3.16.1
+gunicorn==23.0.0
+Django==5.1
+djangorestframework
+djangorestframework-simplejwt[crypto]
+psycopg2-binary==2.9.9
+python-dotenv
+pillow
