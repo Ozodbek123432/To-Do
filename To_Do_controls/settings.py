@@ -1,14 +1,15 @@
-import os
 from pathlib import Path
 
+# Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# Railway va boshqa production muhitlari uchun
-SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-default-change-this')
+# SECURITY WARNING: keep the secret key used in production secret!
+SECRET_KEY = 'django-insecure-xpev2why(%osna7$@amzh*w!q@qu7m&o#gdj2chg#4k56q&tci'
 
-DEBUG = os.environ.get('DEBUG', 'False') == 'True'
+# SECURITY WARNING: don't run with debug turned on in production!
+DEBUG = False  # ← O'ZGARTIRILDI
 
-ALLOWED_HOSTS = ['*']  # Railway uchun, keyinchalik domen qo‘shasiz
+ALLOWED_HOSTS = ['.railway.app', 'localhost']  # ← O'ZGARTIRILDI
 
 # Application definition
 INSTALLED_APPS = [
@@ -18,12 +19,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
+    'ToDo_beckend',
     'rest_framework',
-    'rest_framework_simplejwt',
-
-    'ToDo_beckend',   # sizniki
-    'accaounts',      # sizniki
+    'accaounts',
 ]
 
 MIDDLEWARE = [
@@ -56,15 +54,11 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'To_Do_controls.wsgi.application'
 
-# Database – Railway PostgreSQL ni avtomatik beradi
+# Database
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.environ.get('PGDATABASE', 'railway'),
-        'USER': os.environ.get('PGUSER', 'postgres'),
-        'PASSWORD': os.environ.get('PGPASSWORD', ''),
-        'HOST': os.environ.get('PGHOST', 'containers-us-west-123.railway.app'),
-        'PORT': os.environ.get('PGPORT', '5432'),
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
 
@@ -83,23 +77,8 @@ USE_I18N = True
 USE_TZ = True
 
 # Static files
-STATIC_URL = '/static/'
-STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATIC_URL = 'static/'
+STATIC_ROOT = BASE_DIR / 'staticfiles'  # ← QO'SHILGAN
 
+# Default primary key field type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-# DRF + JWT sozlamalari
-REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
-    ),
-    'DEFAULT_PERMISSION_CLASSES': (
-        'rest_framework.permissions.IsAuthenticated',
-    ),
-}
-
-from datetime import timedelta
-SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(hours=1),
-    'REFRESH_TOKEN_LIFETIME': timedelta(days=7),
-}
