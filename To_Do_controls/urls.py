@@ -28,6 +28,6 @@ def home_view(request):
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('home/', home_view),   # asosiy sahifa – hech qanday app kerak emas
+    path('home/', home_view),
     path("", include("ToDo_beckend.urls")),
 ]
